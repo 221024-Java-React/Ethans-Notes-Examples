@@ -1,8 +1,11 @@
 package com.example.services;
 
+import java.util.List;
+
 import com.example.dao.PersonDao;
 import com.example.exceptions.PersonDoesNotExistException;
 import com.example.models.Person;
+import com.example.utils.LoggingUtil;
 
 public class PersonService {
 	
@@ -15,15 +18,14 @@ public class PersonService {
 		this.personDao = personDao;
 	}
 	
-	public void registerPerson(String first, String last, int ssn, boolean faculty, String email, String password, double gpa) {
-		Person p;
+	public void registerPerson(Person p) {
 		try {
-			p = personDao.getPersonByEmail(email);
+			personDao.getPersonByEmail(p.getEmail());
 			//Throw an exception if the user exists when trying to register
+			LoggingUtil.getLogger().warn("User with email " + p.getEmail() + " tried registering again");
 		} catch (PersonDoesNotExistException e) {
-			p = new Person(first, last, ssn, faculty, email, password, gpa);
-			
 			personDao.addPerson(p);
+			LoggingUtil.getLogger().info("New user registed");
 		}
 	
 	}
@@ -32,11 +34,18 @@ public class PersonService {
 		Person p = personDao.getPersonByEmail(email);
 		
 		if(p == null) {
-			//You'd want to throw an invalid credentials or something
+			LoggingUtil.getLogger().warn("User with email " + email + " had a failed login attempt");
+			
 			return null;
 		}
 		
+		
+		LoggingUtil.getLogger().info("User " + email + " logged in");
 		return p;
+	}
+	
+	public List<Person> getAllRegistered(){
+		return personDao.getAllPeople();
 	}
 
 }
