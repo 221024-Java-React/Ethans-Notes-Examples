@@ -1,0 +1,13 @@
+-- Use double dash to create single line comments
+
+-- DDL is used to create our database and users
+-- DCL is used to grant access to our users to databases
+
+-- First create a new user
+CREATE USER rootuser WITH PASSWORD 'password';
+
+-- Next create the new database
+CREATE DATABASE schooldb;
+
+-- Finally we use DCL to give the rootuser permission to use the schooldb
+GRANT ALL PRIVILEGES ON DATABASE schooldb TO rootuser;
