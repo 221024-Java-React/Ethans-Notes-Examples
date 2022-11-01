@@ -1,0 +1,34 @@
+-- So take a look at some more DDL examples, we also use DDL to create tables
+
+GRANT ALL PRIVILEGES ON schema public TO rootuser;
+
+-- To create a new table we want to use the CREATE keyword with TABLE
+CREATE TABLE users(
+	id int primary key,
+	type int,
+	first_name varchar(64),
+	last_name varchar(64),
+	email varchar(256),
+	password varchar(256)
+);
+
+-- We use DML to CREATE, READ, UPDATE, AND DELETE elements from a table
+-- We use INSERT keyword to insert into the table
+-- Inserting our first teacher into the users table
+INSERT INTO users(id, type, first_name, last_name, email, password) VALUES
+	(1, 1, 'Valerie', 'Frizzle', 'valerie.frizzle@school.com', 'password');
+
+-- If you are including all of the columns in the values, you don't need to list them all out
+-- in the insert statement
+INSERT INTO users VALUES
+	(2, 1, 'Veronica', 'Vaughn', 'veronica.vaughn@school.com', 'password'),
+	(3, 1, 'Dewey', 'Finn', 'dewey.finn@school.com', 'password'),
+	(4, 1, 'Jennifer', 'Honey', 'jennifer.honey@school.com', 'password');
+
+INSERT INTO users VALUES
+	(5, 2, 'Joshua', 'Maciel', 'joshua.maciel@school.com', 'password'),
+	(6, 2, 'Adrian', 'Caso', 'adrian.caso@school.com', 'password');
+	
+-- To get information out of the table we use the SELECT keyword
+-- We use the * wildcart to retrieve all the columns from the table
+SELECT * FROM users;

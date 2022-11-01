@@ -1,0 +1,26 @@
+-- If we wanted to narrow down the query results we can use the DQL language with the Where clause
+
+-- Only select the teachers from the table (teachers have type 1)
+SELECT * FROM users WHERE type = 1;
+
+-- We can update specific records with the DQL
+UPDATE users SET password = 'p4ssword' WHERE email = 'veronica.vaughn@school.com';
+
+-- If we only want to select specific data from a row, we can specify that instead of the * wildcard
+-- We can also give the returned data a different name using alias'
+-- List the first and last names of all the people who have not changed their default password
+SELECT first_name AS first, last_name AS last FROM users WHERE password = 'password';
+
+-- We can also specify records to delete with the where clause
+DELETE FROM users where id = 6;
+
+-- Order by allows us to sort elements in descending or ascending order
+SELECT * FROM users ORDER BY last_name;
+
+SELECT * FROM users ORDER BY last_name DESC;
+
+SELECT * FROM users WHERE id > 3;
+
+SELECT * FROM users WHERE not id=3;
+
+SELECT * FROM users WHERE type = 1 AND id > 1;
