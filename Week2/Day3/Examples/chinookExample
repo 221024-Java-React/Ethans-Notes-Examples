@@ -1,0 +1,147 @@
+-- Some more basic DML selects w/DQL
+SELECT * FROM employee;
+
+-- Select all the Sales Managers
+SELECT * FROM employee WHERE title = 'Sales Manager';
+
+-- Select the Sales Support Agent with a first name of Jane
+SELECT * FROM employee WHERE title = 'Sales Support Agent' AND firstname = 'Jane';
+
+-- Select the employees either with the name Nancy OR who are Sales Support Agents
+SELECT * FROM employee WHERE firstname = 'Nancy' OR title = 'Sales Support Agent';
+
+-- We can also query against null, in our case, anyone with a reportsto equal to null is upper management
+SELECT * FROM employee WHERE reportsto IS null;
+
+-- We can also do the opposite, and find everyone who reports to someone else
+SELECT * FROM employee WHERE reportsto IS NOT null;
+
+-- We can use the < > <= >= with our where clauses
+SELECT * FROM employee WHERE reportsto > 3;
+
+-- Allowed to use != as well
+SELECT * FROM employee WHERE firstname != 'Jane';
+
+SELECT * FROM employee WHERE NOT firstname = 'Jane';
+
+-- We can use Wildcards to create something similar to a fuzzy search by using the like keyword in the where clause
+-- % wildcard is a standin for 0 or more characters
+-- _ wildcard is a standin for exactly one character
+
+SELECT * FROM album;
+
+-- We want to find all the albums that start with the letter B
+SELECT * FROM album WHERE title like 'B%';
+
+-- Select all albums with a second letter that is l
+SELECT * FROM album WHERE title LIKE '_l%';
+
+SELECT * FROM album WHERE title LIKE 'L%' OR title LIKE 'S%';
+
+-- The between keyword does what it sounds like it does
+SELECT * FROM employee WHERE employeeid BETWEEN 5 AND 7;
+
+-- The in keyword creates a set of possiblities
+SELECT * FROM employee WHERE firstname IN ('Nancy', 'Jane', 'Steve');
+
+-- Aggregate Functions
+SELECT COUNT(*) FROM album WHERE title LIKE 'B%';
+
+SELECT COUNT(*) FROM employee WHERE title LIKE 'Sale%';
+
+-- Return the distinct number of positions
+SELECT COUNT(DISTINCT(title)) FROM employee;
+
+SELECT * FROM invoice;
+
+SELECT MAX(total) FROM invoice;
+SELECT MIN(total) FROM invoice;
+SELECT AVG(total) FROM invoice;
+SELECT SUM(total) FROM invoice;
+
+-- Groupby
+SELECT COUNT(*) AS sales, billingcountry FROM invoice GROUP BY billingcountry;
+
+SELECT COUNT(*) AS sales, billingcountry
+FROM invoice
+GROUP BY billingcountry 
+ORDER BY sales DESC;
+
+-- IF we wanted to use the results of aggregate function as a query parameter we have to use the HAVING keyword
+
+SELECT billingcountry, SUM(total)
+FROM invoice 
+GROUP BY billingcountry
+HAVING SUM(total) > 50;
+
+-- Scalar functions operate on and return a single VALUE
+SELECT ABS(-99);
+
+SELECT ROUND(AVG(total),2) FROM invoice;
+
+-- Sub Queries
+-- Retrieve the customers that spent more than 16 dollars
+SELECT * FROM customer
+WHERE customerid
+IN (
+	SELECT customerid FROM invoice i
+	WHERE i.total > 16
+);
+
+
+-- Get all the invoices which are greater than 16 and have an invoiceid of greater than 200
+SELECT customerid, total, invoiceid
+FROM (
+	SELECT * FROM invoice i
+	WHERE i.total > 16
+) AS i2
+WHERE i2.invoiceid > 200;
+
+-- Join the artist and album tables
+SELECT * FROM artist a INNER JOIN album b ON a.artistid = b.artistid;
+SELECT * FROM artist a INNER JOIN album b ON a.artistid = b.artistid WHERE a.name LIKE 'A%';
+
+-- Some advanced joins and querries to get us more info
+-- Lets figure out which sales managers sold the most records
+SELECT e.firstname, e.lastname, COUNT(*) AS sales
+FROM employee e
+INNER JOIN customer c ON c.supportrepid = e.employeeid
+INNER JOIN invoice i ON i.customerid = c.customerid
+GROUP BY employeeid
+ORDER BY sales desc;
+
+-- We can also just denormalize. lets say we want to see all the information about the tracks, which album they are from
+-- the media type and genre
+SELECT
+	t.name as song,
+	ar.name as artist,
+	a.title as album,
+	m.name as mediatype,
+	g.name as genre
+FROM track t
+LEFT JOIN mediatype m ON m.mediatypeid = t.mediatypeid
+LEFT JOIN album a ON a.albumid = t.albumid
+LEFT JOIN artist ar ON ar.artistid = a.artistid
+LEFT JOIN genre g ON g.genreid = t.genreid;
+
+-- Lets find how much each song has sold
+SELECT t.name AS song, SUM(i.quantity) AS sold
+FROM track t
+INNER JOIN invoiceline i ON t.trackid = i.trackid
+GROUP BY t.name
+ORDER BY sold DESC;
+
+SELECT c.firstname, c.lastname, t.name FROM invoice i
+INNER JOIN invoiceline i2 ON i.invoiceid = i2.invoicelineid
+INNER JOIN track t ON i2.trackid = t.trackid 
+INNER JOIN customer c ON i.customerid = c.customerid;
+
+
+
+
+
+
+
+
+
+

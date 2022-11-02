@@ -1,0 +1,21 @@
+-- start some transactions
+INSERT INTO users VALUES
+	(9, 2, 'Spongebob', 'Squarepants', 'spongebob.squarepants@school.com', 'password'),
+	(10, 2, 'Patrick', 'Star', 'patrick.star@school.com', 'password');
+	
+-- Currently we can still get the results of these added people because the transaction is currently cached
+SELECT * FROM users;
+
+-- If we wanted to create a save point to roll back to later
+SAVEPOINT a;
+
+UPDATE users SET TYPE = 1 WHERE first_name = 'Patrick';
+
+-- Oops we accidentally deleted every row from the users table
+DELETE FROM users;
+
+-- If we accidentally did something like delete everything from the table, we can rollback to the previous save point
+ROLLBACK TO a;
+
+-- When we are ready to save this data to the database
+COMMIT;

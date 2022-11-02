@@ -1,0 +1,153 @@
+-- Create another table, this time using the references keyword to create a many-to-one relationship with
+-- teachers, we can also have this table auto generate the id for us
+CREATE TABLE courses (
+	course_id int primary key generated always as identity,
+	subject varchar(32),
+	course_number int,
+	name varchar(64),
+	-- teacher column will/can point to a persons id in the users table
+	teacher int references users(id)
+);
+
+ALTER TABLE courses
+	DROP CONSTRAINT courses_teacher_fkey,
+	ADD CONSTRAINT courses_teacher_fkey
+  	FOREIGN KEY (teacher)
+  	REFERENCES users(id)
+  	ON DELETE CASCADE;
+
+/*
+	ALTER TABLE courses
+	DROP CONSTRAINT courses_teacher_fkey,
+	ADD CONSTRAINT courses_teacher_fkey
+  	FOREIGN KEY (teacher)
+  	REFERENCES users(id)
+  	ON DELETE CASCADE;
+
+ */
+
+SELECT * FROM users;
+SELECT * FROM courses;
+
+-- When inserting data into the new table, you must provide a valid user id otherwise it will allow you to insert the data
+INSERT INTO courses(subject, course_number, name, teacher) VALUES
+	('Math', 120, 'Intro to Math', 4),
+	('Reading', 100, 'Intro to Reading', 2),
+	('Music', 200, 'Intro to Rock', 3),
+	('Science', 170, 'Intro to Science', 1);
+	
+-- Lets try to insert a course with a teacher that does not exist
+INSERT INTO courses(subject, course_number, name, teacher) VALUES
+	('Sitting', 200, 'Intro to Sitting Under a Rock', 10);
+
+-- Lets create a table to keep track of the users types, then in the future if we ever needed new types of users
+-- we can easily update this table
+CREATE TABLE person_type(
+	type_id int primary key,
+	type_name varchar(10)
+);
+
+-- Insert our types of people
+INSERT INTO person_type VALUES
+	(1, 'TEACHER'),
+	(2, 'STUDENT');
+
+SELECT * FROM person_type;
+
+-- Use DDL to alter the users table to point at the person_type table so we have that information available to us
+-- We are altering the users table (ALTER TABLE users)
+-- We are adding a new constraint called fk_user_type (ADD CONSTRAINT fk_user_type)
+-- The constraint we are adding is a foreign key on the type column (FOREIGN KEY (type)
+-- The foreign key will reference the person_type tables type_id column (REFERENCES person_type(type_id)) 
+ALTER TABLE users ADD CONSTRAINT fk_user_type FOREIGN KEY (type) REFERENCES person_type(type_id);
+
+-- Therotically we should be able to remove entities from the courses table without much issue
+-- We can't let spongebob teach a course because he is not a teacher
+DELETE FROM courses WHERE course_id = 6;
+
+-- If we try to delete a teacher which is teaching a course, we shouldn't be allowed to because this will break
+-- refertial integrity
+DELETE FROM users WHERE id = 10;
+
+-- The easiest thing for us to do, would be set the teacher column of this course null, then delete the teacher
+UPDATE courses SET teacher = null WHERE course_id = 7;
+
+--Many to many relationships use junction tables
+-- The junction table is a list of primary keys from two different tables
+-- We will model a many to many with students and the courses they are taking
+-- Because many students are enrolled in many courses
+
+CREATE TABLE student_course_junction(
+	student_id int references users(id) on delete cascade,
+	course_id int references courses(course_id) on delete cascade,
+	primary key(student_id, course_id)
+);
+
+INSERT INTO users VALUES
+	(10, 2, 'Jimmy', 'Nuetron', 'jimmy.nuetron@school.com', 'password'),
+	(11, 2, 'Morty', 'Smith', 'morty.smith@school.com', 'password'),
+	(12, 2, 'Billy', 'Madison', 'billy.madison@school.com', 'password'),
+	(13, 2, 'Timmy', 'Turner', 'timmy.turner@school.com', 'password');
+
+ -- When a student gets enrolled in a course, they will be added to the course student junction table
+-- When the student is done taking the course, they can be removed from the course student junction
+INSERT INTO student_course_junction VALUES
+	(10, 1), (10, 2),
+	(11, 1), (11, 2), (11, 3),
+	(12, 1),
+	(13, 1), (13, 2), (13, 3);
+
+SELECT * FROM student_course_junction;
+
+-- Just creating a couple of tables we can use with our school management system later
+CREATE TABLE topics(
+	topic_id int primary key generated always as identity,
+	topic_text varchar(256),
+	course int references courses(course_id) ON DELETE CASCADE
+);
+
+CREATE TABLE assignments(
+	assignment_id int primary key generated always as identity,
+	student int references users(id) ON DELETE CASCADE,
+	grade float,
+	done bool,
+	pastDue bool,
+	dueDate date
+);
+
+-- We can also query multiple tables at the same time
+SELECT s.first_name, s.last_name, c.name
+FROM users s, courses c, student_course_junction scj
+WHERE s.id = scj.student_id AND c.course_id = scj.course_id;
+
+-- We can also create a view from the query above
+CREATE VIEW enrolled_students AS
+	SELECT s.first_name, s.last_name, c.name
+	FROM users s, courses c, student_course_junction scj
+	WHERE s.id = scj.student_id AND c.course_id = scj.course_id;
+
+-- We can treat this view similary to a table
+SELECT * FROM enrolled_students;
+
+-- What are the current courses being run at this school
+SELECT distinct name FROM enrolled_students;
+
+-- Very simple look at joins by joining courses and the users tables
+-- inner join
+select * from courses c inner join users u on c.teacher = u.id;
+
+-- right join
+select * from courses c right join users u on c.teacher = u.id;
+
+-- left join
+select * from courses c left join users u on c.teacher = u.id;
+
+select * from courses c full join users u on c.teacher = u.id;
+
+SELECT first_name, c.name as course FROM users u, courses c WHERE c.teacher = u.id
+UNION
+SELECT first_name, c.name as course 
+FROM users u, courses c, student_course_junction scj
+WHERE u.id = scj.student_id AND c.course_id = scj.course_id;
+
+
