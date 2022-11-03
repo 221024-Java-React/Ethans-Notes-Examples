@@ -3,21 +3,23 @@ package com.example.models;
 import java.io.Serializable;
 
 //To be able to write this to a file, we must mark with it the Serializable interface
-public class Person implements Serializable{
+public class Person /*implements Serializable*/{
 	
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	
+	private int id;
+	private PersonType type;
 	private String firstName;
 	private String lastName;
 	//If we did not want to write this info to a file, we can mark this property as transient
-	private transient long ssn;
-	private boolean faculty;
+	//private transient long ssn;
+	//private boolean faculty;
 	private String email;
 	private String password;
-	private double gpa;
+	//private double gpa;
 	
 	//We probably also want to keep track of this person courses, but I can't be bothered right now
 	
@@ -25,15 +27,24 @@ public class Person implements Serializable{
 		super();
 	}
 
-	public Person(String firstName, String lastName, long ssn, boolean faculty, String email, String password, double gpa) {
+	public Person(int id, PersonType type, String firstName, String lastName, String email, String password) {
 		super();
+		this.id = id;
+		this.type = type;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.faculty = faculty;
 		this.email = email;
 		this.password = password;
-		this.gpa = gpa;
-		this.ssn = ssn;
+	}
+	
+	//Make one other constructor
+	public Person(PersonType type, String firstName, String lastName, String email, String password) {
+		super();
+		this.type = type;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.email = email;
+		this.password = password;
 	}
 
 	public String getFirstName() {
@@ -52,14 +63,6 @@ public class Person implements Serializable{
 		this.lastName = lastName;
 	}
 
-	public boolean isFaculty() {
-		return faculty;
-	}
-
-	public void setFaculty(boolean faculty) {
-		this.faculty = faculty;
-	}
-
 	public String getEmail() {
 		return email;
 	}
@@ -76,17 +79,26 @@ public class Person implements Serializable{
 		this.password = password;
 	}
 
-	public double getGpa() {
-		return gpa;
+	public int getId() {
+		return id;
 	}
 
-	public void setGpa(double gpa) {
-		this.gpa = gpa;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public PersonType getType() {
+		return type;
+	}
+
+	public void setType(PersonType type) {
+		this.type = type;
 	}
 
 	@Override
 	public String toString() {
-		return "Person [firstName=" + firstName + ", lastName=" + lastName + ", faculty=" + faculty + ", email=" + email
-				+ ", password=" + password + ", gpa=" + gpa + "]";
+		return "Person [id=" + id + ", type=" + type + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", email=" + email + ", password=" + password + "]";
 	}
+
 }

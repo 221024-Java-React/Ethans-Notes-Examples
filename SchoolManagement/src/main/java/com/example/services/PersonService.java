@@ -1,8 +1,10 @@
 package com.example.services;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import com.example.dao.PersonDao;
+import com.example.exceptions.PersonAlreadyExistsException;
 import com.example.exceptions.PersonDoesNotExistException;
 import com.example.models.Person;
 import com.example.utils.LoggingUtil;
@@ -20,14 +22,13 @@ public class PersonService {
 	
 	public void registerPerson(Person p) {
 		try {
-			personDao.getPersonByEmail(p.getEmail());
-			//Throw an exception if the user exists when trying to register
-			LoggingUtil.getLogger().warn("User with email " + p.getEmail() + " tried registering again");
-		} catch (PersonDoesNotExistException e) {
 			personDao.addPerson(p);
-			LoggingUtil.getLogger().info("New user registed");
+			LoggingUtil.getLogger().warn("User: " + p + " was registered");
+		} catch(Exception e) {
+			LoggingUtil.getLogger().warn("User with email " + p.getEmail() + " tried to register a second time");
+			throw new PersonAlreadyExistsException();
 		}
-	
+		
 	}
 	
 	public Person login(String email) {
@@ -36,7 +37,8 @@ public class PersonService {
 		if(p == null) {
 			LoggingUtil.getLogger().warn("User with email " + email + " had a failed login attempt");
 			
-			return null;
+			//Instead of returning null, we could throw an exception and allow Javalin to send a custom response
+			throw new PersonDoesNotExistException();
 		}
 		
 		
@@ -46,6 +48,16 @@ public class PersonService {
 	
 	public List<Person> getAllRegistered(){
 		return personDao.getAllPeople();
+	}
+	
+	public void removePerson(String email) {
+		personDao.deletePerson(email);
+		LoggingUtil.getLogger().info("User " + email + " was removed from the system");
+	}
+	
+	public void updatePerson(Person p) {
+		personDao.updatePerson(p);
+		LoggingUtil.getLogger().info("User " + p.getId() + " was successfully updated in the system");
 	}
 
 }

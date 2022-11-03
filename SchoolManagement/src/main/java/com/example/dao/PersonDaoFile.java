@@ -98,4 +98,10 @@ public class PersonDaoFile implements PersonDao {
 		throw new PersonDoesNotExistException();
 	}
 
+	@Override
+	public Person getPersonById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

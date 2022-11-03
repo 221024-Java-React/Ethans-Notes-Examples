@@ -1,19 +1,22 @@
 -- Create another table, this time using the references keyword to create a many-to-one relationship with
 -- teachers, we can also have this table auto generate the id for us
+
+DROP TABLE courses CASCADE;
+
 CREATE TABLE courses (
 	course_id int primary key generated always as identity,
 	subject varchar(32),
 	course_number int,
 	name varchar(64),
 	-- teacher column will/can point to a persons id in the users table
-	teacher int references users(id)
+	teacher int references people(id)
 );
 
 ALTER TABLE courses
 	DROP CONSTRAINT courses_teacher_fkey,
 	ADD CONSTRAINT courses_teacher_fkey
   	FOREIGN KEY (teacher)
-  	REFERENCES users(id)
+  	REFERENCES people(id)
   	ON DELETE CASCADE;
 
 /*
@@ -59,7 +62,7 @@ SELECT * FROM person_type;
 -- We are adding a new constraint called fk_user_type (ADD CONSTRAINT fk_user_type)
 -- The constraint we are adding is a foreign key on the type column (FOREIGN KEY (type)
 -- The foreign key will reference the person_type tables type_id column (REFERENCES person_type(type_id)) 
-ALTER TABLE users ADD CONSTRAINT fk_user_type FOREIGN KEY (type) REFERENCES person_type(type_id);
+ALTER TABLE people ADD CONSTRAINT fk_person_type FOREIGN KEY (type) REFERENCES person_type(type_id);
 
 -- Therotically we should be able to remove entities from the courses table without much issue
 -- We can't let spongebob teach a course because he is not a teacher
@@ -78,10 +81,12 @@ UPDATE courses SET teacher = null WHERE course_id = 7;
 -- Because many students are enrolled in many courses
 
 CREATE TABLE student_course_junction(
-	student_id int references users(id) on delete cascade,
+	student_id int references people(id) on delete cascade,
 	course_id int references courses(course_id) on delete cascade,
 	primary key(student_id, course_id)
 );
+
+DROP TABLE student_course_junction CASCADE;
 
 INSERT INTO users VALUES
 	(10, 2, 'Jimmy', 'Nuetron', 'jimmy.nuetron@school.com', 'password'),

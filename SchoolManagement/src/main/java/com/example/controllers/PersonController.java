@@ -30,6 +30,8 @@ public class PersonController {
 		//To convert our body to a java object we will use the object mapper
 		Person p = objectMapper.readValue(context.body(), Person.class);
 		
+		System.out.println(p);
+		
 		pServ.registerPerson(p);
 		
 		//Set our status code to OK
@@ -53,6 +55,24 @@ public class PersonController {
 		context.status(200);
 		context.result(objectMapper.writeValueAsString(loggedIn));
 		
+	};
+	
+	public Handler handleDelete = (context) -> {
+		Map<String, String> body = objectMapper.readValue(context.body(), LinkedHashMap.class);
+		
+		pServ.removePerson(body.get("email"));
+		
+		context.status(200);
+		context.result("Person was removed");
+	};
+	
+	public Handler handleUpdate = (context) -> {
+		Person p = objectMapper.readValue(context.body(), Person.class);
+		
+		pServ.updatePerson(p);
+		
+		context.status(200);
+		context.result("Persons information was updated");
 	};
 
 }

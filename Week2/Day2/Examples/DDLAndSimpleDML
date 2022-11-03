@@ -3,14 +3,16 @@
 GRANT ALL PRIVILEGES ON schema public TO rootuser;
 
 -- To create a new table we want to use the CREATE keyword with TABLE
-CREATE TABLE users(
-	id int primary key,
+CREATE TABLE people(
+	id int primary key generated always as identity,
 	type int,
 	first_name varchar(64),
 	last_name varchar(64),
 	email varchar(256),
 	password varchar(256)
 );
+
+DROP TABLE users CASCADE;
 
 -- We use DML to CREATE, READ, UPDATE, AND DELETE elements from a table
 -- We use INSERT keyword to insert into the table
