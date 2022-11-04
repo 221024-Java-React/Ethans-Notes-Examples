@@ -41,6 +41,8 @@ public class PersonService {
 			throw new PersonDoesNotExistException();
 		}
 		
+		//insert validation logic here
+		//p = new Person();
 		
 		LoggingUtil.getLogger().info("User " + email + " logged in");
 		return p;

@@ -36,7 +36,7 @@ public class SchoolManagementDriver {
 		        cors.add(it -> {
 		            it.anyHost();
 		        });
-		    });
+		    }); 
 		});
 		
 		//Here we would have our routes/handlers
