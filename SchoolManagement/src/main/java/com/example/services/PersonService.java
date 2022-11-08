@@ -61,5 +61,9 @@ public class PersonService {
 		personDao.updatePerson(p);
 		LoggingUtil.getLogger().info("User " + p.getId() + " was successfully updated in the system");
 	}
+	
+	public Person getPersonById(int id) {
+		return personDao.getPersonById(id);
+	}
 
 }

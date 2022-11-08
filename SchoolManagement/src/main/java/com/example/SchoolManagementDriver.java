@@ -47,6 +47,8 @@ public class SchoolManagementDriver {
 		app.post("person/login", pController.handleLogin);
 		app.delete("/person/", pController.handleDelete);
 		app.put("/person/", pController.handleUpdate);
+		app.get("/person/session", pController.checkSession);
+		app.get("/person/logout", pController.handleLogout);
 		
 		app.post("/course", cController.handleCreate);
 		app.get("/course", cController.handleRead);

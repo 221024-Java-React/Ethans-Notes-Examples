@@ -52,9 +52,47 @@ public class PersonController {
 		
 		Person loggedIn = pServ.login(body.get("email"));
 		
+		//Inside of the login, we probably want to store the users information inside of a cookie using
+		// the session api
+		
+		//Get the current users session if it exists, or create a new session if none exist
+		//context.req().getSession();
+		
+		//Create an attribute in the cookie called user and store the current users id
+		context.req().getSession().setAttribute("user", loggedIn.getId());
+		
 		context.status(200);
 		context.result(objectMapper.writeValueAsString(loggedIn));
 		
+	};
+	
+	public Handler checkSession = (context) -> {
+		
+		//If there is no session with this attribute, no user is logged in
+		if(context.sessionAttribute("user") == null) {
+			//If you wanted to you could automatically invalidate the session created
+			context.status(401);
+			context.result("No user is logged in");
+			return;
+		}
+		
+		Integer id = (Integer) context.req().getSession().getAttribute("user");
+		
+		System.out.println(id);
+		
+		Person p = pServ.getPersonById(id);
+		
+		context.status(200);
+		context.result(objectMapper.writeValueAsString(p));
+		
+	};
+	
+	public Handler handleLogout = (context) -> {
+		context.req().getSession().invalidate();
+		
+		//Probably want to actually pull in the logger
+		context.status(200);
+		context.result("User was logged out");
 	};
 	
 	public Handler handleDelete = (context) -> {
