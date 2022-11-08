@@ -12,6 +12,8 @@ CREATE TABLE people(
 	password varchar(256)
 );
 
+ALTER TABLE people ADD CONSTRAINT email_unqiue UNIQUE (email);
+
 DROP TABLE users CASCADE;
 
 -- We use DML to CREATE, READ, UPDATE, AND DELETE elements from a table
@@ -33,4 +35,5 @@ INSERT INTO users VALUES
 	
 -- To get information out of the table we use the SELECT keyword
 -- We use the * wildcart to retrieve all the columns from the table
-SELECT * FROM users;
+SELECT * FROM people;
+SELECT * FROM courses;
