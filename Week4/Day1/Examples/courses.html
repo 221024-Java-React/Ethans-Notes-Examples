@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Courses</title>
+        <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="courses.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+
+         <!-- Tables are ways to nicely display/layout data, we can use a table to create a navbar 
+            (NOT THE WAY I WOULD RECOMMEND TO CREATE A NAV BAR, FOR DEMONSTRATION OF TABLES ONLY)
+        <table>
+            <thead>
+                <th><a href="./home.html"><img src="./Revature.png"/></a></th>
+                <th><a href="./courses.html">Course List</a></th>
+                <th><a href="./login.html">Student/Teacher Login</a></th>
+            </thead>
+        </table>
+        -->
+
+        <nav>
+            <div class="nav-item">
+                <a href="./home.html" class="nav-link"><img src="./Revature.png" id="logo"/></a>
+            </div>
+            <div class="nav-item">
+                <a href="./courses.html" class="nav-link">Course List</a>
+            </div>
+            <div class="nav-item">
+                <a href="./login.html" class="nav-link">Student/Teacher Login</a>
+            </div>
+        </nav>
+
+        <div class="course-container">
+            <h1>Courses we offer</h1>
+
+            <h2>Study Song of the Day</h2>
+            <audio controls>
+                <source src="./song.mp3" type="audio/mpeg"/>
+            </audio>
+
+            <h2>Most recent lecture</h2>
+            <video controls height="720px" width="1280px">
+                <source src="./video.mp4" type="video/mp4"/>
+            </video>
+
+            <table id="course-table">
+                <thead>
+                    <th>Number</th>
+                    <th>Name</th>
+                    <th>Topics</th>
+                    <th>Instructor</th>
+                </thead>
+                <tr class="course">
+                    <td>100</td>
+                    <td>Intro to Problem Solving</td>
+                    <td>
+                        <ul>
+                            <li>Pseudo Coding</li>
+                            <li>Logical Puzzles</li>
+                            <li>Diagraming</li>
+                        </ul>
+                    </td>
+                    <td>To be Determined</td>
+                </tr>
+                <tr class="course">
+                    <td>110</td>
+                    <td>Python "Programming"</td>
+                    <td>
+                        <ul>
+                            <li>Pseudo Coding</li>
+                            <li>Installing Pycharm</li>
+                            <li>Mastering AI/ML</li>
+                        </ul>
+                    </td>
+                    <td>To be Determined</td>
+                </tr>
+                <tr class="course">
+                    <td>200</td>
+                    <td>Intro to Object Oriented Programming</td>
+                    <td>
+                        <ul>
+                            <li>The Pillars of OOP</li>
+                            <ol>
+                                <li>Polymorphism</li>
+                                <li>Abstraction</li>
+                                <li>Encapsulation</li>
+                                <li>Inheritance</li>
+                            </ol>
+                            <li>OOP Programming Languages</li>
+                            <li>OOP Design Patterns</li>
+                        </ul>
+                    </td>
+                    <td>Ethan McGill</td>
+                </tr>
+            </table>
+        </div>
+    </body>
+</html>

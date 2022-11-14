@@ -1,0 +1,14 @@
+.course-container{
+    width: 80%;
+    margin: auto;
+}
+
+#course-table{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#course-table, th, td {
+    border: 2px solid black;
+    text-align: center;
+}
