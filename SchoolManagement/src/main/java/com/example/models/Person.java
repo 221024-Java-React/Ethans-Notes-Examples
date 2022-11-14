@@ -1,6 +1,7 @@
 package com.example.models;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 //To be able to write this to a file, we must mark with it the Serializable interface
 public class Person /*implements Serializable*/{
@@ -101,4 +102,23 @@ public class Person /*implements Serializable*/{
 				+ ", email=" + email + ", password=" + password + "]";
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(email, firstName, id, lastName, password, type);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Person other = (Person) obj;
+		return Objects.equals(email, other.email) && Objects.equals(firstName, other.firstName) && id == other.id
+				&& Objects.equals(lastName, other.lastName) && Objects.equals(password, other.password)
+				&& type == other.type;
+	}
+	
 }
