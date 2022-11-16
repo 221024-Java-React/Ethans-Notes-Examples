@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Inheritance</title>
+</head>
+<body>
+    
+</body>
+<script>
+    
+    /*
+    ES6 Classes - as of 2015 when javascript introduced version 6 we can use class syntax that is
+    very simialr to Java syntax. We denote classes with the class keyword and define data and behaviors
+    within. We can add things like constructors, which are invoked with the new keyword. We can do class
+    inheritance with the extends keyword, which will set up the prototype chain for us when an object
+    gets instantiated. There are even static data and behaviors now, which just like Java, means those are
+    associated with the class itself, not any one object.
+    */
+
+    class Animal {
+        constructor(name) {
+            this.name = name;
+            this.count++;
+        }
+        
+        static count = 0;//how many animals have been instantiated?
+        
+        speak() {
+            console.log('Hello, my name is' + this.name);
+        }
+
+        play() {
+            console.log(this.name + " is playing!");
+        }
+
+    }
+
+    class Cat extends Animal {
+        constructor(name, color) {
+            super(name);//this will invoke the parent constructor, sending up the name parameter
+            this.color = color;
+        }
+        speak() {
+            console.log('Meow, I am a cat!');
+        }
+    }
+
+
+    //This is an IIFE, it's just a function which is invoked automatically as soon as it is defined.
+    (function func() {
+        let animal = new Animal("Fred");//invoking Animal constructor
+        let cat = new Cat("Bobby", "Tabby");//invoking Cat constructor
+
+        let obj = { 
+            thing: 5 
+        }
+
+
+        console.log("Animal: ", animal)//fact finding - check out the console to explore Animal
+        console.log("Cat: ", cat);//fact finding - check out the console to explore Cat
+
+        cat.speak();//this invokes the Cat.speak() method, which is different from Animal.speak() 
+        cat.play();//Cat doesn't have a play() method, but Animal does so this works.
+
+        /*
+        Here we are going to re-assign the parent of our cat object. We change the __proto__ property
+        to point to a different object. Next time we call the 
+        */
+        cat.__proto__ = obj; //this line changes the __proto__ property of the cat object to be obj instead of Animal
+
+        console.log("Animal: ", animal)
+        console.log("Cat: ", cat);
+
+        cat.speak();
+        /*
+        Now when we call play() first the ionterpreter looks at the cat object, which doesn't have this method. 
+        So the interpreter then follows the prototype chain up looking for the play() method. Because the parent
+        object of cat is now obj and not animal, the play() method will not be found and we will get an error.
+        */
+        cat.play();//this no longer works, as animal is no longer the parent of cat.
+    })();
+
+</script>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Iterators</title>
+</head>
+
+<body>
+
+</body>
+<script>
+    /*
+    Generator functions, written by adding a * to the function keyword, are special functions which can resolve
+    to multiple values over time. Normal functions return once, generator functions can return multiple times.
+    We use the yield keyword to return a value and pause the function execution. Next time the function is called
+    it resumes executing from where it left off until the next yield or return keyword.
+    */
+    function* generatorFunction() {
+        console.log("generating: 1");
+        yield 1;
+        console.log("generating: 2");
+        yield 2;
+        console.log("generating: 3");
+        yield 3;
+        console.log("returning: 4");
+        return 4;
+        console.log("this is unreachable code");
+    }
+
+    /*
+    We can use the generator function to produce an iterator that iterates through our 
+    yielded/returned values
+    */
+    for (let val of generatorFunction()) {
+        console.log("iterator value: ", val);//look at the console and note that the last value, 4, never gets logged.
+    }
+
+
+    /*
+    An iterable object is one which implements the iterable protocol, which means that we can get an iterator
+    object which will allow us to iterate through the object. A generator is just a special type of iterator.
+    To implement the iterable protocol, and thus define iteration behavior, we simply need to create a function
+    that returns an iterator. That iterator object defines how we iterate.
+
+    The following iterableObject has a function that is identified by "[Symbol.iterator]". Don't worry too
+    much about this unique syntax, it's just the name of the function. The name includes [square brackets].
+
+    That [Symbol.iterator]() function returns the iterator object. You could utilize this object to
+    iterate, but you are better off using it implicitly as part of a for...of loop. The for...of loop 
+    requires an iterator to run, and it will do all the work for you.
+    */
+    let iterableObject = {
+        //These values just define the min and max. We will iterate from 1 to 10.
+        min: 1,
+        max: 10,
+
+
+        //this function returns the iterator
+        [Symbol.iterator]: function () {
+            //what follows is the iterator object we are returning...
+            return {
+                //We assign the min and max values to these two locally scoped variables
+                current: this.min,
+                end: this.max,
+
+                /*
+                The iterator object must have the next() method. This is where the magic happens. You can
+                define your own logic here. Iterators must return an object with two properties: value, and done.
+                Value is the current value of the thing we are iterating. Done is a bool that indicates if we 
+                have completed all iterations. Done should be false until we have finished iteration, then it 
+                should be true. Subsequent calls once done will continue to return the same. 
+                Once done is true, we no longer care about value, and you should avoid using value at that point.
+                Value may be undefined, but this is not enforced by the language.
+                */
+                next() {
+                    if (this.current <= this.last) {
+                        return { value: this.current++, done: false }
+                    } else {
+                        return { value: "NO VALUE DON'T CHECK ME!", done: true }//value no longer matters, and should be ignored.
+                    }
+                }
+            }
+        }
+    }
+
+    //Now we can use the for...of loop to iterate 1-10. For...of implicitly gets the iterator and uses it to loop.
+    for (let obj of iterableObject) {
+        console.log("iterator: ", obj)
+    }
+
+
+
+</script>
+
+</html>
