@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JS Inheritance</title>
 </head>
+
 <body>
-    
+
 </body>
 <script>
-    
+
     /*
     ES6 Classes - as of 2015 when javascript introduced version 6 we can use class syntax that is
     very simialr to Java syntax. We denote classes with the class keyword and define data and behaviors
@@ -23,11 +25,11 @@
     class Animal {
         constructor(name) {
             this.name = name;
-            this.count++;
+            this.count++;//increases every time a new animal is instantiated
         }
-        
+
         static count = 0;//how many animals have been instantiated?
-        
+
         speak() {
             console.log('Hello, my name is' + this.name);
         }
@@ -54,8 +56,8 @@
         let animal = new Animal("Fred");//invoking Animal constructor
         let cat = new Cat("Bobby", "Tabby");//invoking Cat constructor
 
-        let obj = { 
-            thing: 5 
+        let obj = {
+            thing: 5
         }
 
 
@@ -84,4 +86,5 @@
     })();
 
 </script>
+
 </html>

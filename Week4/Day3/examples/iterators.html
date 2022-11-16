@@ -76,7 +76,7 @@
                 Value may be undefined, but this is not enforced by the language.
                 */
                 next() {
-                    if (this.current <= this.last) {
+                    if (this.current <= this.end) {
                         return { value: this.current++, done: false }
                     } else {
                         return { value: "NO VALUE DON'T CHECK ME!", done: true }//value no longer matters, and should be ignored.
