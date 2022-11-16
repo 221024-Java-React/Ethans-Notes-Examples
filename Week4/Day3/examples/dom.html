@@ -9,64 +9,91 @@
 </head>
 
 <body id="body">
-    <p>We are going to edit this web page live with DOM manipulation! </p>
-    <button onclick="navigateToPage2()">GO THERE</button>
-    <p>The button above will hide the rest of the body content currently visible on this page. It will then add new
-        content, like we have navigated to a different page.</p>
+    <div id="nav">
+        <hr>
+        <h3>Navbar!</h3>
+        <br>
+        <button id="button2" onclick="navigateToPage1()">Page 1</button>
+        <button id="button1" onclick="navigateToPage2()">Page 2</button>
+    </div>
+    <hr>
+    <div id="content">
+        <h1>This is the home page!</h1>
+        <p>We are going to edit this web page live with DOM manipulation! </p>
 
-    <div id="div1">
-        <p>There are lots of ways to do this.</p>
-        <a href="http://www.google.com">google.com</a>
-        <table id="table1" class="tableClass" border="1" cellpadding="5" cellspacing="5">
-            <tr>
-                <th>first name</th>
-                <th>last name</th>
-            </tr>
-            <tr>
-                <td>Kyle</td>
-                <td>Plummer</td>
-            </tr>
-            <tr>
-                <td>Ethan</td>
-                <td id="ethanslastname">McGill</td>
-            </tr>
-        </table>
+        <div id="div1">
+            <p>There are lots of ways to do this.</p>
+            <a href="http://www.google.com">google.com</a>
+            <table id="table1" class="tableClass" border="1" cellpadding="5" cellspacing="5">
+                <tr>
+                    <th>first name</th>
+                    <th>last name</th>
+                </tr>
+                <tr>
+                    <td>Kyle</td>
+                    <td>Plummer</td>
+                </tr>
+                <tr>
+                    <td>Ethan</td>
+                    <td id="ethanslastname">McGill</td>
+                </tr>
+            </table>
+        </div>
     </div>
 </body>
 <script>
     function navigateToPage2() {
         console.log("Hiding body innerHTML content...");
-        let body = document.getElementById("body");
-        body.innerHTML = "<button onclick=\"navigateToPage1()\">GO BACK!</button>";
+        let body = document.getElementById("content");
+        body.innerHTML = `
+        <h1>This is the home page!</h1>
+        <p>We are going to edit this web page live with DOM manipulation! </p>
+
+        <div id="div1">
+            <p>There are lots of ways to do this.</p>
+            <a href="http://www.google.com">google.com</a>
+            <table id="table1" class="tableClass" border="1" cellpadding="5" cellspacing="5">
+                <tr>
+                    <th>first name</th>
+                    <th>last name</th>
+                </tr>
+                <tr>
+                    <td>Kyle</td>
+                    <td>Plummer</td>
+                </tr>
+                <tr>
+                    <td>Ethan</td>
+                    <td id="ethanslastname">McGill</td>
+                </tr>
+            </table>
+        </div>
+        `;
     }
 
     function navigateToPage1() {
         console.log("Navigating back...");
-        let body = document.getElementById("body");
-        body.innerHTML =
-            `   <p>We are going to edit this web page live with DOM manipulation! </p>
-            <button onclick="navigateToPage2()">GO THERE</button>
-            <p>The button above will hide the rest of the body content currently visible on this page. It will then add new
-            content, like we have navigated to a different page.</p>
+        let body = document.getElementById("content");
+        body.innerHTML = `
+        <h1>This is the home page!</h1>
 
-            <div id="div1">
-                <p>There are lots of ways to do this.</p>
-                <a href="http://www.google.com">google.com</a>
-                <table id="table1" class="tableClass" border="1" cellpadding="5" cellspacing="5">
-                    <tr>
-                        <th>first name</th>
-                        <th>last name</th>
-                    </tr>
-                    <tr>
-                        <td>Kyle</td>
-                        <td>Plummer</td>
-                    </tr>
-                    <tr>
-                        <td>Ethan</td>
-                        <td id="ethanslastname">McGill</td>
-                    </tr>
-                </table>
-            </div>`;
+        <div id="div1">
+            <p>There are lots of ways to do this.</p>
+            <a href="http://www.google.com">google.com</a>
+            <table id="table1" class="tableClass" border="1" cellpadding="5" cellspacing="5">
+                <tr>
+                    <th>first name</th>
+                    <th>last name</th>
+                </tr>
+                <tr>
+                    <td>Kyle</td>
+                    <td>Plummer</td>
+                </tr>
+                <tr>
+                    <td>Ethan</td>
+                    <td id="ethanslastname">McGill</td>
+                </tr>
+            </table>
+        </div>`;
     }
 
 
