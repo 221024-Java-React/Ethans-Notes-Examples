@@ -8,8 +8,77 @@
     <title>Dom Manipulation</title>
 </head>
 
-<body>
+<body id="body">
+    <p>We are going to edit this web page live with DOM manipulation! </p>
+    <button onclick="navigateToPage2()">GO THERE</button>
+    <p>The button above will hide the rest of the body content currently visible on this page. It will then add new
+        content, like we have navigated to a different page.</p>
 
+    <div id="div1">
+        <p>There are lots of ways to do this.</p>
+        <a href="http://www.google.com">google.com</a>
+        <table id="table1" class="tableClass" border="1" cellpadding="5" cellspacing="5">
+            <tr>
+                <th>first name</th>
+                <th>last name</th>
+            </tr>
+            <tr>
+                <td>Kyle</td>
+                <td>Plummer</td>
+            </tr>
+            <tr>
+                <td>Ethan</td>
+                <td id="ethanslastname">McGill</td>
+            </tr>
+        </table>
+    </div>
 </body>
+<script>
+    function navigateToPage2() {
+        console.log("Hiding body innerHTML content...");
+        let body = document.getElementById("body");
+        body.innerHTML = "<button onclick=\"navigateToPage1()\">GO BACK!</button>";
+    }
+
+    function navigateToPage1() {
+        console.log("Navigating back...");
+        let body = document.getElementById("body");
+        body.innerHTML =
+            `   <p>We are going to edit this web page live with DOM manipulation! </p>
+            <button onclick="navigateToPage2()">GO THERE</button>
+            <p>The button above will hide the rest of the body content currently visible on this page. It will then add new
+            content, like we have navigated to a different page.</p>
+
+            <div id="div1">
+                <p>There are lots of ways to do this.</p>
+                <a href="http://www.google.com">google.com</a>
+                <table id="table1" class="tableClass" border="1" cellpadding="5" cellspacing="5">
+                    <tr>
+                        <th>first name</th>
+                        <th>last name</th>
+                    </tr>
+                    <tr>
+                        <td>Kyle</td>
+                        <td>Plummer</td>
+                    </tr>
+                    <tr>
+                        <td>Ethan</td>
+                        <td id="ethanslastname">McGill</td>
+                    </tr>
+                </table>
+            </div>`;
+    }
+
+
+
+    (function iife() {
+        console.log("fact finding our div: ", document.getElementById("div1"));
+        console.log("fact finding our table: ", document.getElementById("table1"));
+        console.log("get elements by class name: ", document.getElementsByClassName("tableClass"));
+        console.log("get all <p> tags: ", document.getElementsByTagName("p"));
+
+    })();
+
+</script>
 
 </html>
