@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Courses</title>
+        <link rel="stylesheet" href="home.css">
+        <link rel="stylesheet" href="courses.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap" rel="stylesheet">
+
+    </head>
+    <body>
+
+         <!-- Tables are ways to nicely display/layout data, we can use a table to create a navbar 
+            (NOT THE WAY I WOULD RECOMMEND TO CREATE A NAV BAR, FOR DEMONSTRATION OF TABLES ONLY)
+        <table>
+            <thead>
+                <th><a href="./home.html"><img src="./Revature.png"/></a></th>
+                <th><a href="./courses.html">Course List</a></th>
+                <th><a href="./login.html">Student/Teacher Login</a></th>
+            </thead>
+        </table>
+        -->
+
+        <nav>
+            <div class="nav-item">
+                <a href="./home.html" class="nav-link"><img src="./Revature.png" id="logo"/></a>
+            </div>
+            <div class="nav-item">
+                <a href="./courses.html" class="nav-link">Course List</a>
+            </div>
+            <div class="nav-item">
+                <a href="./login.html" class="nav-link">Student/Teacher Login</a>
+            </div>
+        </nav>
+
+        <div class="course-container">
+            <h1>Courses we offer</h1>
+            <div id="courses">
+                
+            </div>
+        </div>
+        <script src="courses.js"></script>
+    </body>
+</html>

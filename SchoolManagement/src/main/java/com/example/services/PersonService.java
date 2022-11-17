@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.example.dao.PersonDao;
+import com.example.exceptions.InvalidCredentialsException;
 import com.example.exceptions.PersonAlreadyExistsException;
 import com.example.exceptions.PersonDoesNotExistException;
 import com.example.models.Person;
@@ -31,14 +32,14 @@ public class PersonService {
 		
 	}
 	
-	public Person login(String email) {
+	public Person login(String email, String password) {
 		Person p = personDao.getPersonByEmail(email);
 		
-		if(p == null) {
+		if(p == null || !p.getPassword().equals(password)) {
 			LoggingUtil.getLogger().warn("User with email " + email + " had a failed login attempt");
 			
 			//Instead of returning null, we could throw an exception and allow Javalin to send a custom response
-			throw new PersonDoesNotExistException();
+			throw new InvalidCredentialsException();
 		}
 		
 		//insert validation logic here

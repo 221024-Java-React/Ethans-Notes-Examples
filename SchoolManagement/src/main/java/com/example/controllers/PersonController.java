@@ -50,7 +50,10 @@ public class PersonController {
 	public Handler handleLogin = (context) -> {
 		Map<String, String> body = objectMapper.readValue(context.body(), LinkedHashMap.class);
 		
-		Person loggedIn = pServ.login(body.get("email"));
+		String email = body.get("email");
+		String password = body.get("password");
+		
+		Person loggedIn = pServ.login(email, password);
 		
 		//Inside of the login, we probably want to store the users information inside of a cookie using
 		// the session api

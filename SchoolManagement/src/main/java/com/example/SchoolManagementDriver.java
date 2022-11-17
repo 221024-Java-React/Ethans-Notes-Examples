@@ -8,6 +8,7 @@ import com.example.dao.FileIO;
 import com.example.dao.PersonDao;
 import com.example.dao.PersonDaoFile;
 import com.example.dao.PersonDaoJDBC;
+import com.example.exceptions.InvalidCredentialsException;
 import com.example.exceptions.PersonAlreadyExistsException;
 import com.example.exceptions.PersonDoesNotExistException;
 import com.example.models.Person;
@@ -44,7 +45,7 @@ public class SchoolManagementDriver {
 		
 		app.post("/person/register", pController.handleRegister);
 		app.get("/person/", pController.handleGetAll);
-		app.post("person/login", pController.handleLogin);
+		app.post("/person/login", pController.handleLogin);
 		app.delete("/person/", pController.handleDelete);
 		app.put("/person/", pController.handleUpdate);
 		app.get("/person/session", pController.checkSession);
@@ -56,7 +57,7 @@ public class SchoolManagementDriver {
 		
 
 		//We can also register handlers to deal with exceptions
-		app.exception(PersonDoesNotExistException.class, (e, context) -> {
+		app.exception(InvalidCredentialsException.class, (e, context) -> {
 			context.status(401);
 			context.result("You were unable to login");
 		});

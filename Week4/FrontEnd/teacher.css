@@ -1,0 +1,18 @@
+.teacher-container{
+    width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+.form-group{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+#toggle-create, #toggle-assign {
+    cursor: pointer;
+}
