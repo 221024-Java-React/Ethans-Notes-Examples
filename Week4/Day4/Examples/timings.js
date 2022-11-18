@@ -22,19 +22,20 @@ function stopTimeout(){
     element.innerText = "Timeout was canceled";
 }
 
-function startInterval(){
-    document.getElementById("sound1").play();
-    interval = setInterval(()=> {
-        let body = document.getElementsByTagName("body")[0];
-        body.setAttribute("style", `background-color: ${disco()}`);
-    }, 100);
-}
 
 function stopInterval(){
     document.getElementById("sound1").pause();
     clearInterval(interval);
     let body = document.getElementsByTagName("body")[0];
     body.setAttribute("style", `background-color: white}`);
+}
+
+function startInterval(){
+    document.getElementById("sound1").play();
+    interval = setInterval(()=> {
+        let body = document.getElementsByTagName("body")[0];
+        body.setAttribute("style", `background-color: ${disco()}`);
+    }, 100);
 }
 
 function disco(){
