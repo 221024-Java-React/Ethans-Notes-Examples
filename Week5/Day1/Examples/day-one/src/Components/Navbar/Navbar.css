@@ -1,0 +1,25 @@
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 80px;
+    background-color: lightblue;
+}
+
+.nav-item {
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.nav-link {
+    font-weight: 900;
+    font-size: 18px;
+    color: black;
+    cursor: pointer;
+}
+
+.nav-logo {
+    height: 65px;
+    cursor: pointer;
+}
