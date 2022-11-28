@@ -4,12 +4,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.example.models.Person;
 import com.example.services.PersonService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.javalin.http.Handler;
 
+@Component("PersonControllerBean")
+//If we were using spring web/mvc we would use @Controller instead, more on this tomorrow
 public class PersonController {
 	
 	private PersonService pServ;
@@ -17,6 +22,7 @@ public class PersonController {
 	//Object mapper will be used to transform our java object from json and vise versa
 	private ObjectMapper objectMapper;
 	
+	@Autowired
 	public PersonController(PersonService pServ) {
 		this.pServ = pServ;
 		objectMapper = new ObjectMapper();

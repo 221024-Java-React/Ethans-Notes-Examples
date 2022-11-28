@@ -1,20 +1,13 @@
 package com.example;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import com.example.controllers.CourseController;
 import com.example.controllers.PersonController;
-import com.example.dao.CourseDao;
-import com.example.dao.CourseDaoJDBC;
-import com.example.dao.FileIO;
-import com.example.dao.PersonDao;
-import com.example.dao.PersonDaoFile;
-import com.example.dao.PersonDaoJDBC;
 import com.example.exceptions.InvalidCredentialsException;
 import com.example.exceptions.PersonAlreadyExistsException;
-import com.example.exceptions.PersonDoesNotExistException;
-import com.example.models.Person;
-import com.example.models.PersonType;
-import com.example.services.CourseService;
-import com.example.services.PersonService;
+
 
 import io.javalin.Javalin;
 
@@ -23,13 +16,16 @@ public class SchoolManagementDriver {
 	public static void main(String args[]) {
 		
 		/* Typically at the top of our main, I like to create all our daos and services and controllers */
-		PersonDao pDao = new PersonDaoJDBC();
-		PersonService pServ = new PersonService(pDao);
-		PersonController pController = new PersonController(pServ);
-		CourseDao cDao = new CourseDaoJDBC();
-		CourseService cServ = new CourseService(cDao, pDao);
-		CourseController cController = new CourseController(cServ);
+		//PersonDao pDao = new PersonDaoJDBC();
+		//PersonService pServ = new PersonService(pDao);
 		
+		ApplicationContext appContext = new ClassPathXmlApplicationContext("beans.xml");
+		
+		PersonController pController = appContext.getBean("PersonControllerBean", PersonController.class);
+		
+		//CourseDao cDao = new CourseDaoJDBC();
+		//CourseService cServ = new CourseService(cDao, appContext.getBean("PersonDaoBean", PersonDaoJDBC.class));
+		CourseController cController = appContext.getBean("CourseControllerBean", CourseController.class);
 		
 		//Setup our javalin app and routes
 		Javalin app = Javalin.create(config -> {

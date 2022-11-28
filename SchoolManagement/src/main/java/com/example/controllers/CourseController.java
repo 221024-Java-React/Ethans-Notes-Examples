@@ -2,20 +2,30 @@ package com.example.controllers;
 
 import java.util.LinkedHashMap;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.example.models.Course;
 import com.example.services.CourseService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.javalin.http.Handler;
 
+@Component("CourseControllerBean")
 public class CourseController {
 	
 	private CourseService cServ;
 	private ObjectMapper om;
 	
+	@Autowired
 	public CourseController(CourseService cServ) {
 		this.cServ = cServ;
 		om = new ObjectMapper();
+	}
+	
+	//No args for setter injection
+	public CourseController () {
+		this.om = new ObjectMapper();
 	}
 	
 	public Handler handleCreate = (context) -> {
@@ -51,4 +61,9 @@ public class CourseController {
 		context.result("Course was removed");
 	};
 
+	
+	public void setCServ(CourseService cServ) {
+		this.cServ = cServ;
+	}
+	
 }

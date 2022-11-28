@@ -3,6 +3,9 @@ package com.example.services;
 import java.sql.SQLException;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.example.dao.PersonDao;
 import com.example.exceptions.InvalidCredentialsException;
 import com.example.exceptions.PersonAlreadyExistsException;
@@ -10,6 +13,7 @@ import com.example.exceptions.PersonDoesNotExistException;
 import com.example.models.Person;
 import com.example.utils.LoggingUtil;
 
+@Service
 public class PersonService {
 	
 	private PersonDao personDao;
@@ -17,6 +21,7 @@ public class PersonService {
 	//Dependency injection, more on this later, just know, it allows us to change components of the same "type"
 	//easily
 	
+	@Autowired
 	public PersonService(PersonDao personDao) {
 		this.personDao = personDao;
 	}

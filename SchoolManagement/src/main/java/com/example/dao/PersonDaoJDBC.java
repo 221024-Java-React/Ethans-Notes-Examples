@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.example.models.Person;
 import com.example.models.PersonType;
 import com.example.utils.JDBCConnectionUtil;

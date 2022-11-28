@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.example.models.Course;
 import com.example.models.Person;
 import com.example.utils.JDBCConnectionUtil;

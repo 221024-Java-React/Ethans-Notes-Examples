@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
+		
+		
+		<!-- Setting up constructor injection -->
+		<!--
+		<bean name="PersonDaoBean" scope="singleton" class="com.example.dao.PersonDaoJDBC" />
+		<bean name="PersonServiceBean" class="com.example.services.PersonService">
+			<constructor-arg index="0" ref="PersonDaoBean" />
+		</bean>
+		<bean name="PersonControllerBean" class="com.example.controllers.PersonController">
+			<constructor-arg index="0" ref="PersonServiceBean" />
+		</bean>
+		-->
+		<!-- Setting up setter injection -->
+		<!--
+		<bean name="CourseDaoBean" class="com.example.dao.CourseDaoJDBC" />
+		<bean name="CourseServiceBean" class="com.example.services.CourseService">
+			<property name="cDao" ref="CourseDaoBean" />
+			<property name="pDao" ref="PersonDaoBean" />
+		</bean>
+		<bean name="CourseControllerBean" class="com.example.controllers.CourseController">
+			<property name="cServ" ref="CourseServiceBean" />
+		</bean>
+		-->
+		
+		<!-- The "manual" way of autowiring -->
+		<context:annotation-config />
+		
+		<!--
+		<bean name="PersonDaoBean" scope="singleton" class="com.example.dao.PersonDaoJDBC" />
+		<bean name="PersonServiceBean" class="com.example.services.PersonService" />
+		<bean name="PersonControllerBean" class="com.example.controllers.PersonController" />
+		
+		<bean name="CourseDaoBean" class="com.example.dao.CourseDaoJDBC" />
+		<bean name="CourseServiceBean" class="com.example.services.CourseService" />
+		<bean name="CourseControllerBean" class="com.example.controllers.CourseController" />
+		-->
+		
+		<!-- Scan all the classes in the com.example tree, and look for component annotations, and turn those into
+		beans
+		-->
+		<context:component-scan base-package="com.example" />
+		
+		<!-- Setup Spring ORM -->
+		<!-- Use the spring ORM annotations -->
+		<tx:annotation-driven/>
+		
+		<!--  We need to setup a datasource, this will be a bean of a JDBC instance, it will hold all the
+		attributes to create a connection to the db -->
+		
+		<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<property name="driverClassName" value="org.postgresql.Driver"></property>
+			<property name="url" value="jdbc:postgresql://localhost:5432/smsorm"></property>
+			<property name="username" value="postgres"></property>
+			<property name="password" value="password"></property>
+		</bean>
+		
+		<!-- Session factory, this will create our sessions to the database which make our queries -->
+		<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+			<property name="dataSource" ref="dataSource"></property>
+			<property name = "packagesToScan" value="com.example.models"></property>
+			<property name="hibernateProperties">
+				<props>
+					<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</prop>
+					<prop key="hibernate.show_sql">true</prop>
+					<prop key="hibernate.format_sql">true</prop>
+					<prop key="hibernate.hbm2ddl.auto">create</prop>
+				</props>
+			</property>
+		</bean>
+		
+		<bean id="transactionManager" class = "org.springframework.orm.hibernate5.HibernateTransactionManager">
+			<property name = "sessionFactory" ref = "sessionFactory"></property>
+		</bean>
+		
+</beans>
