@@ -1,5 +1,6 @@
 package com.example.models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -57,15 +58,15 @@ public class Ticket {
 	@JoinColumn(name="submitter_id")
 	private Employee submitter;
 	
-	private LocalDateTime submittedDate;
+	private LocalDate submittedDate;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="reviewer_id")
 	private Employee reviewer;
 	
-	private LocalDateTime reviewDate;
+	private LocalDate reviewDate;
 	
-	public Ticket(TicketType type, TicketStatus status, String description, Double amount, Employee submitter, LocalDateTime submittedDate) {
+	public Ticket(TicketType type, TicketStatus status, String description, Double amount, Employee submitter, LocalDate submittedDate) {
 		this.type = new ArrayList<>();
 		this.type.add(type);
 		this.status = new ArrayList<>();

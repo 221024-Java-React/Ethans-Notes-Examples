@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -32,7 +33,7 @@ public class Employee {
 	@Column(name="employee_id")
 	private Integer employeeId;
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(
 			name="employee_role_junction",
 			joinColumns = {@JoinColumn(name="employee_id")},
@@ -61,4 +62,14 @@ public class Employee {
 	@OneToMany(mappedBy="reviewer", cascade=CascadeType.ALL)
 	@JsonIgnore
 	private List<Ticket> reviewedReimbursements;
+
+
+	@Override
+	public String toString() {
+		return "Employee [employeeId=" + employeeId + ", role=" + role.get(0) + ", firstName=" + firstName + ", lastName="
+				+ lastName + ", email=" + email + ", password=" + password + ", reimbursements=" + reimbursements.size()
+				+ ", reviewedReimbursements=" + reviewedReimbursements.size() + "]";
+	}
+	
+	
 }

@@ -16,5 +16,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
 	List<Ticket> getTicketsBySubmitter(Employee e);
 	List<Ticket> getTicketsBySubmitterAndType(Employee e, TicketType t);
 	List<Ticket> getTicketsBySubmitterAndStatus(Employee e, TicketStatus s);
+	List<Ticket> getTicketsByStatus(TicketStatus s);
 
 }

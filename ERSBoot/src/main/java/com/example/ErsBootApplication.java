@@ -1,5 +1,6 @@
 package com.example;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
@@ -7,9 +8,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import com.example.models.Employee;
 import com.example.models.EmployeeRole;
 import com.example.models.TicketStatus;
 import com.example.models.TicketType;
+import com.example.repository.EmployeeRepository;
 import com.example.repository.EmployeeRoleRepository;
 import com.example.repository.TicketStatusRepository;
 import com.example.repository.TicketTypeRepository;
@@ -22,7 +25,7 @@ public class ErsBootApplication {
 	}
 	
 	@Bean
-	public CommandLineRunner CommandLineRunnerBean(EmployeeRoleRepository err, TicketStatusRepository tsr, TicketTypeRepository ttr) {
+	public CommandLineRunner CommandLineRunnerBean(EmployeeRoleRepository err, TicketStatusRepository tsr, TicketTypeRepository ttr, EmployeeRepository er) {
 		return (args) -> {
 			List<EmployeeRole> roles = err.findAll();
 			if(roles.isEmpty()) {
@@ -53,6 +56,13 @@ public class ErsBootApplication {
 				ttr.save(tt2);
 				ttr.save(tt3);
 				ttr.save(tt4);
+			}
+			
+			if(er.count() < 1) {
+				List<EmployeeRole> eRoles = new ArrayList<>();
+				eRoles.add(err.getById(2));
+				Employee manager = new Employee(0, eRoles, "Ethan", "McGill", "ethan@email.com", "password", new ArrayList<>(), new ArrayList<>());
+				er.save(manager);
 			}
 		};
 	}
