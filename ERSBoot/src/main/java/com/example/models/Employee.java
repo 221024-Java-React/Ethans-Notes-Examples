@@ -33,7 +33,7 @@ public class Employee {
 	@Column(name="employee_id")
 	private Integer employeeId;
 
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
 			name="employee_role_junction",
 			joinColumns = {@JoinColumn(name="employee_id")},

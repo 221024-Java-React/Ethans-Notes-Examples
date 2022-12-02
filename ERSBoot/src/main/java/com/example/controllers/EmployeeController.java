@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.exceptions.EmailAlreadyExistsException;
 import com.example.exceptions.InvalidCredentialsException;
 import com.example.models.Employee;
+import com.example.models.RegisterObject;
 import com.example.service.EmployeeService;
 
 import lombok.AllArgsConstructor;
@@ -51,11 +52,4 @@ public class EmployeeController {
 	public ResponseEntity<String> handleExists(){
 		return new ResponseEntity<>("Email already registered", HttpStatus.CONFLICT);
 	}
-}
-
-class RegisterObject {
-	public String firstName;
-	public String lastName;
-	public String email;
-	public String password;
 }
