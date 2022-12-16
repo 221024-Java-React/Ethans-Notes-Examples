@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- bean definitions here -->
+
+    <!-- property based injection -->
+    <bean id = "helloWorld" class = "org.example.entity.HelloWorld">
+        <property name = "message" value = "Dinosaurs!"/>
+    </bean>
+
+    <bean id = "pokemon1" class = "org.example.entity.Pokemon">
+        <!--index refers to the order of parameters in the constructor -->
+        <constructor-arg index = "0" value = "Pikachu"/>
+        <constructor-arg index = "1" value = "Pika"/>
+        <constructor-arg index = "2" value = "Electric"/>
+        <constructor-arg index = "3" value = "Mouse"/>
+        <constructor-arg index = "4" value = "30"/>
+    </bean>
+
+    <bean id = "pokemon2" class = "org.example.entity.Pokemon">
+        <property name="species">
+            <value>Poochyena</value>
+        </property>
+        <property name="name">
+            <value>Pooch</value>
+        </property>
+        <property name="type1">
+            <value>Dark</value>
+        </property>
+        <property name="type2" value = "dog"/>
+        <property name="level" value = "40"/>
+    </bean>
+
+    <bean id = "trainer1" class = "org.example.entity.Trainer">
+        <property name="name" value = "Ash Ketchum"/>
+        <!-- Referencing the id of the other bean -->
+        <property name="starter" ref = "pokemon1"/>
+        <property name="num_badges" value = "100"/>
+    </bean>
+
+
+
+
+    <!-- The following enables use of annotation-based configurations to be detected within your class files -->
+    <context:annotation-config/>
+
+    <!-- Bean definitions -->
+    <bean id = "account1" class = "org.example.entity.Account" name = "ron">
+        <property name="name"><value>Ron</value></property>
+        <property name="password"><value>scabbers44</value></property>
+        <property name="id"><value>1</value></property>
+    </bean>
+
+    <bean id = "account2" class = "org.example.entity.Account" name = "harry">
+        <property name="name"><value>Harry</value></property>
+        <property name="password"><value>hedwig44</value></property>
+        <property name="id"><value>2</value></property>
+    </bean>
+
+    <bean id = "order" class = "org.example.entity.Order">
+        <property name="id"><value>1</value></property>
+    </bean>
+    <bean id = "item" class = "org.example.entity.Item">
+        <property name="name"><value>Firebolt</value></property>
+        <property name="id"><value>1</value></property>
+        <property name="category"><value>broomstick</value></property>
+    </bean>
+
+
+
+</beans>
