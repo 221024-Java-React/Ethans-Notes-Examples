@@ -16,7 +16,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="transactions")
-public class Transaction {
+public class AccountTransaction {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -26,26 +26,26 @@ public class Transaction {
 	@Enumerated(EnumType.ORDINAL)
 	private TransactionType type;
 	
-	@ManyToOne(fetch=FetchType.LAZY, optional = false)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="to_id")
 	private Account to;
 	
-	@ManyToOne(fetch=FetchType.LAZY, optional = false)
+	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="from_id")
 	private Account from;
 	
 	private double amount;
 		
-	public Transaction() {
+	public AccountTransaction() {
 		super();
 	}
 
-	public Transaction(int transactionId, TransactionType type, Account to, Account from, double amount) {
+	public AccountTransaction(int transactionId, TransactionType type, Account to, Account from, double amount) {
 		super();
 		this.transactionId = transactionId;
 		this.type = type;
 		this.to = to;
-		this.to = from;
+		this.from = from;
 		this.amount = amount;
 	}
 

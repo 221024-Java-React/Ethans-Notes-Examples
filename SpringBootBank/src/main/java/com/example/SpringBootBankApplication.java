@@ -14,7 +14,6 @@ import com.example.models.User;
 import com.example.repository.AccountRepository;
 import com.example.repository.TransactionRepository;
 import com.example.repository.UserRepository;
-import com.example.service.TestService;
 
 @SpringBootApplication
 public class SpringBootBankApplication {
@@ -24,6 +23,7 @@ public class SpringBootBankApplication {
 	}
 	
 	//CommandLineRunner allows you to run commands at the startup of your server
+	/*
 	@Bean
 	public CommandLineRunner CommandLineRunnerBean(TestService ts) {
 		return (args) -> {
@@ -31,4 +31,5 @@ public class SpringBootBankApplication {
 		};
 		
 	}
+	*/
 }
