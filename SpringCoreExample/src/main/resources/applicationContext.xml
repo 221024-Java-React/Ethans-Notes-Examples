@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!-- Since we gave these beans a name, we can more easily find them later when we need them -->
+	<!--  When our application spins up, spring will look for the classes we listed below, and create instances of them
+		that we could use anywhere
+	 -->
+	 <!--
+	<bean name="UserRepoBean" class="com.example.repository.UserRepositoryImpl"/>
+	-->
+	<!-- To setup Constructor injection -->
+	<!-- 
+	<bean name="UserServiceBean" class="com.example.service.UserService">
+		<constructor-arg index="0" ref="UserRepoBean"/>
+	</bean>
+	
+	<bean name="AccountRepoBean" class="com.example.repository.AccountRepositoryImpl" />
+	-->
+	
+	<!-- To setup Setter injection -->
+	<!--  
+	<bean name="AccountServiceBean" class="com.example.service.AccountService">
+		<property name="accountRepo" ref="AccountRepoBean"/>
+	</bean>
+
+	-->
+	<!-- We need to tell spring to scan our application looking for classes marked with stereotype annotations -->
+	<context:annotation-config />
+	
+	<!-- Tell spring to look for our annotations -->
+	<context:component-scan base-package="com.example"/>
+</beans>
