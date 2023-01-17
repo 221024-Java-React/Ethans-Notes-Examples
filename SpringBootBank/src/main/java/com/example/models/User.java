@@ -13,6 +13,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //Whenever we are annotating a class to be mapped to a database we are using JPA annotations
 //JPA is Java Persistence API -> Gets implemented by other libraries
 //JPA Library/API is the interface which Hibernate implements in Spring Data
@@ -45,6 +47,7 @@ public class User {
 	
 	//Map the cardinality
 	@OneToMany(mappedBy="owner", cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	@JsonIgnore
 	private List<Account> accounts;
 	
 	public User() {

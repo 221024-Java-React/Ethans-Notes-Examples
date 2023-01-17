@@ -14,5 +14,13 @@ export type Account = {
 };
 
 export type UserSliceState = {
-    user: User | undefined
+    user: User | undefined;
+    loginError: boolean;
+    loggedIn: boolean;
+    loading: boolean;
+}
+
+export type LoginObject = {
+    email: string;
+    password: string;
 }

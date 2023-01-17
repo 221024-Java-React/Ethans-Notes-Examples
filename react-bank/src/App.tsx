@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import {store} from './redux/store';
 import { LoginPage } from './components/LoginPage/LoginPage';
 import './App.css';
+import { HomePage } from './components/HomePage/HomePage';
 
 // This is what our modern components, theres still probably nasty class components
 // To interact with component lifecylce we use hooks, useEffect, useState, useReducer, you can
@@ -21,6 +22,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<LoginPage/>} />
+          <Route path="/home" element={<HomePage/>}/>
         </Routes>
       </BrowserRouter>
     </Provider>

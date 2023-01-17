@@ -1,12 +1,22 @@
 package com.example.controllers;
 
+import java.util.NoSuchElementException;
+
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.models.LoginObject;
 import com.example.models.User;
 import com.example.service.UserService;
 
@@ -44,6 +54,30 @@ public class UserController {
 	//@RequestBody is telling the server that we except a body of a user type to come with this request
 	public User registerUser(@RequestBody User u) {
 		return us.createUser(u);
+	}
+	
+	@PostMapping("/login")
+	public User loginUser(@RequestBody LoginObject lo ){
+		String email = lo.getEmail();
+		String password = lo.getPassword();
+		
+		User u = us.getUserByEmail(email);
+		
+		if(!u.getPassword().equals(password)) {
+			throw new NoSuchElementException();
+		}
+			
+		return u;
+	}
+	
+	@ExceptionHandler(NoSuchElementException.class)
+	public ResponseEntity<String> handleUserDoesntExist(){
+		return new ResponseEntity<>("Username or password incorrect", HttpStatus.UNAUTHORIZED);
+	}
+	
+	@GetMapping("/{id}")
+	public User getById(@PathVariable("id")int id) {
+		return us.getUserById(id);
 	}
 	
 }

@@ -22,5 +22,9 @@ public class UserService {
 	public User getUserByEmail(String email) {
 		return ur.findByEmail(email).orElseThrow();
 	}
+	
+	public User getUserById(int id) {
+		return ur.findById(id).orElseThrow();
+	}
 
 }
